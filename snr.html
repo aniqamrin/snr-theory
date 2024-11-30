@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Input Form</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <label for="snr">Enter SNR Level:</label>
+    <input type="number" id="snr" name="snr" /><br /><br />
+    
+    <label for="vol">Enter Volume BO:</label>
+    <input type="number" id="vol" name="vol" /><br /><br />
+    
+    <label for="selector">Choose Condition:</label>
+    <select id="selector" name="selector">
+      <option value="support">Support</option>
+      <option value="resistance">Resistance</option>
+    </select><br /><br />
+    
+    <button onclick="calculateOutput()">Calculate</button>
+    <p id="result"></p>
+    
+    <script>
+      function calculateOutput() {
+        // Get values from inputs
+        const snr = parseFloat(document.getElementById('snr').value);
+        const vol = parseFloat(document.getElementById('vol').value);
+        const selector = document.getElementById('selector').value;
+
+        // Validate inputs
+        if (isNaN(snr) || isNaN(vol)) {
+          document.getElementById('result').textContent = "Please enter valid numbers for SNR and Volume BO.";
+          return;
+        }
+
+        // Perform calculations based on selector
+        let output;
+        if (selector === "support") {
+          output = Math.sqrt(snr) - vol; // Support condition
+        } else if (selector === "resistance") {
+          output = Math.sqrt(snr) + vol; // Resistance condition
+        } else {
+          document.getElementById('result').textContent = "Invalid selection.";
+          return;
+        }
+
+        const outputf = Math.pow(output, 2); // Square the result
+
+        // Display the result
+        document.getElementById('result').textContent = `Output: ${outputf}`;
+      }
+    </script>
+  </body>
+</html>
